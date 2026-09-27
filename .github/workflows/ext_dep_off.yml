@@ -34,7 +34,7 @@ jobs:
       run: cmake -E make_directory ${{runner.workspace}}/build
 
     - name: Install Eigen (C test dependency)
-      working-directory: ${{runner.workspace}}/acados
+      working-directory: ${{github.workspace}}
       shell: bash
       # TODO: cache
       run: ./.github/linux/install_eigen.sh
@@ -52,7 +52,7 @@ jobs:
         make install -j4
 
     - name: Export Paths Lib
-      working-directory: ${{runner.workspace}}/acados
+      working-directory: ${{github.workspace}}
       shell: bash
       run: |
         echo "ACADOS_SOURCE_DIR=$(pwd)" >> $GITHUB_ENV
@@ -60,7 +60,7 @@ jobs:
         echo "LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$(pwd)/lib" >> $GITHUB_ENV
 
     - name: Run example
-      working-directory: ${{runner.workspace}}/acados/examples/c_ext_dep_off/pendulum
+      working-directory: ${{github.workspace}}/examples/c_ext_dep_off/pendulum
       shell: bash
       run: |
         echo "LD_LIBRARY_PATH=$LD_LIBRARY_PATH"

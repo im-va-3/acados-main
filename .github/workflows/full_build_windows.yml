@@ -78,25 +78,25 @@ jobs:
       if: always()
       with:
         command: |
-            cd ${{runner.workspace}}/acados/.github/windows; setup_mingw
+            cd ${{github.workspace}}/.github/windows; setup_mingw
 
     - name: Install acados via MATLAB script
       uses: matlab-actions/run-command@v2
       if: always()
       with:
         command: |
-            cd ${{runner.workspace}}/acados/interfaces/acados_matlab_octave; acados_install_windows
+            cd ${{github.workspace}}/interfaces/acados_matlab_octave; acados_install_windows
 
     - name: Run minimal MATLAB example
       uses: matlab-actions/run-command@v2
       if: always()
       with:
         command: |
-            cd ${{runner.workspace}}/acados/.github/windows
+            cd ${{github.workspace}}/.github/windows
             setup_mingw
-            cd ${{runner.workspace}}/acados/interfaces/acados_matlab_octave
+            cd ${{github.workspace}}/interfaces/acados_matlab_octave
             acados_env_variables_windows
-            cd ${{runner.workspace}}/acados/examples/acados_matlab_octave/getting_started
+            cd ${{github.workspace}}/examples/acados_matlab_octave/getting_started
             minimal_example_ocp
 
     - name: Run minimal Simulink example
@@ -104,11 +104,11 @@ jobs:
       if: always()
       with:
         command: |
-            cd ${{runner.workspace}}/acados/.github/windows
+            cd ${{github.workspace}}/.github/windows
             setup_mingw
-            cd ${{runner.workspace}}/acados/interfaces/acados_matlab_octave
+            cd ${{github.workspace}}/interfaces/acados_matlab_octave
             acados_env_variables_windows
-            cd ${{runner.workspace}}/acados/examples/acados_matlab_octave/test
+            cd ${{github.workspace}}/examples/acados_matlab_octave/test
             simulink_test
 
     # - name: Run MATLAB tests with new CasADi
@@ -116,11 +116,11 @@ jobs:
     #   if: always()
     #   with:
     #     command: |
-    #         cd ${{runner.workspace}}/acados/.github/windows
+    #         cd ${{github.workspace}}/.github/windows
     #         setup_mingw
-    #         cd ${{runner.workspace}}/acados/interfaces/acados_matlab_octave
+    #         cd ${{github.workspace}}/interfaces/acados_matlab_octave
     #         acados_env_variables_windows
-    #         cd ${{runner.workspace}}/acados/examples/acados_matlab_octave/p_global_example
+    #         cd ${{github.workspace}}/examples/acados_matlab_octave/p_global_example
     #         main
 
     - name: MATLAB idxs_rev example
@@ -128,11 +128,11 @@ jobs:
       if: always()
       with:
         command: |
-            cd ${{runner.workspace}}/acados/.github/windows
+            cd ${{github.workspace}}/.github/windows
             setup_mingw
-            cd ${{runner.workspace}}/acados/interfaces/acados_matlab_octave
+            cd ${{github.workspace}}/interfaces/acados_matlab_octave
             acados_env_variables_windows
-            cd ${{runner.workspace}}/acados/examples/acados_matlab_octave/pendulum_on_cart_model
+            cd ${{github.workspace}}/examples/acados_matlab_octave/pendulum_on_cart_model
             main_slack_min_formulations
 
     # This fails undeterministically on Github actions:
@@ -144,9 +144,9 @@ jobs:
     #   if: always()
     #   with:
     #     command: |
-    #         cd ${{runner.workspace}}/acados/.github/windows
+    #         cd ${{github.workspace}}/.github/windows
     #         setup_mingw
-    #         cd ${{runner.workspace}}/acados/interfaces/acados_matlab_octave
+    #         cd ${{github.workspace}}/interfaces/acados_matlab_octave
     #         acados_env_variables_windows
-    #         cd ${{runner.workspace}}/acados/examples/acados_matlab_octave/p_global_example
+    #         cd ${{github.workspace}}/examples/acados_matlab_octave/p_global_example
     #         simulink_test_p_global
