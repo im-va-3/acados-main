@@ -51,8 +51,8 @@ if LARGE_SCALE:
     knots = [np.arange(200),np.arange(200)]
     data = np.random.random((38416,)).ravel(order='F')
 else:
-    knots = [np.arange(20),np.arange(20)]
-    data = 0.1 + 0.*np.random.random((256,)).ravel(order='F')
+    knots = [np.arange(21),np.arange(21)]
+    data = 0.1 + 0.*np.random.random((289,)).ravel(order='F')
 
 def create_p_global(lut=True):
     m = MX.sym("m")

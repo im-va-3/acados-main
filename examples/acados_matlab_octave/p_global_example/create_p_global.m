@@ -45,8 +45,8 @@ function [p_global, m, l, coefficients, coefficient_vals, knots, p_global_values
             coefficient_vals = 0.1*ones(38809, 1);
         else
             % small scale lookup table
-            knots = {0:19,0:19};
-            coefficient_vals = 0.1*ones(256, 1);
+            knots = {0:20,0:20};
+            coefficient_vals = 0.1*ones(289, 1);
         end
 
         coefficients = MX.sym('coefficient', numel(coefficient_vals), 1);

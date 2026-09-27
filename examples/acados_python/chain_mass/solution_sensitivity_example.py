@@ -38,16 +38,16 @@ import numpy as np
 import casadi as ca
 from casadi import SX, norm_2, vertcat
 from casadi.tools import struct_symSX, entry
-from casadi.tools.structure3 import DMStruct, ssymStruct
 import matplotlib.pyplot as plt
 from acados_template import AcadosModel, AcadosOcp, AcadosOcpSolver
 from utils import get_chain_params
-from typing import Tuple, Optional
+from typing import Any, Tuple, Optional
 from plot_utils import plot_timings
 import time
 
+# CasADi's structured matrix classes are private; these annotations do not need them at runtime.
 
-def export_discrete_erk4_integrator_step(f_expl: SX, x: SX, u: SX, p: ssymStruct, h: float, n_steps: int = 2) -> ca.SX:
+def export_discrete_erk4_integrator_step(f_expl: SX, x: SX, u: SX, p: Any, h: float, n_steps: int = 2) -> ca.SX:
     """Define ERK4 integrator for continuous dynamics."""
     dt = h / n_steps
     ode = ca.Function("f", [x, u, p], [f_expl])
@@ -61,7 +61,7 @@ def export_discrete_erk4_integrator_step(f_expl: SX, x: SX, u: SX, p: ssymStruct
 
     return xnext
 
-def export_discrete_euler_integrator_step(f_expl: SX, x: SX, u: SX, p: ssymStruct, h: float, n_steps: int = 2) -> ca.SX:
+def export_discrete_euler_integrator_step(f_expl: SX, x: SX, u: SX, p: Any, h: float, n_steps: int = 2) -> ca.SX:
     """Define Euler integrator for continuous dynamics."""
     dt = h / n_steps
     ode = ca.Function("f", [x, u, p], [f_expl])
@@ -73,7 +73,7 @@ def export_discrete_euler_integrator_step(f_expl: SX, x: SX, u: SX, p: ssymStruc
     return xnext
 
 
-def define_param_ssymStruct(n_mass: int, disturbance: bool = True) -> ssymStruct:
+def define_param_ssymStruct(n_mass: int, disturbance: bool = True) -> Any:
     """Define parameter struct."""
     n_link = n_mass - 1
 
@@ -108,7 +108,7 @@ def find_idx_for_labels(sub_vars: SX, sub_label: str) -> list[int]:
     return [i for i, label in enumerate(sub_vars.str().strip("[]").split(", ")) if sub_label in label]
 
 
-def export_chain_mass_model(n_mass: int, Ts: float = 0.2, disturbance: bool = False, discrete_dyn_type: str = "RK4") -> Tuple[AcadosModel, DMStruct]:
+def export_chain_mass_model(n_mass: int, Ts: float = 0.2, disturbance: bool = False, discrete_dyn_type: str = "RK4") -> Tuple[AcadosModel, Any]:
     """Export chain mass model for acados."""
     x0 = np.array([0, 0, 0])  # fix mass (at wall)
 
@@ -205,7 +205,7 @@ def export_chain_mass_model(n_mass: int, Ts: float = 0.2, disturbance: bool = Fa
 
 
 def compute_parametric_steady_state(
-    model: AcadosModel, p: DMStruct, xPosFirstMass: np.ndarray, xEndRef: np.ndarray
+    model: AcadosModel, p: Any, xPosFirstMass: np.ndarray, xEndRef: np.ndarray
 ) -> np.ndarray:
     """Compute steady state for chain mass model."""
 
@@ -260,7 +260,7 @@ def export_parametric_ocp(
     nlp_tol: float = 1e-5,
     random_scale: dict = {"m": 0.0, "D": 0.0, "L": 0.0, "C": 0.0},
     ext_fun_compile_flags: Optional[str] = None,
-) -> Tuple[AcadosOcp, DMStruct]:
+) -> Tuple[AcadosOcp, Any]:
     # create ocp object to formulate the OCP
     ocp = AcadosOcp()
     ocp.solver_options.N_horizon = chain_params_["N"]
