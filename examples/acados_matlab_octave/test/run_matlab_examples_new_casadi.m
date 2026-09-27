@@ -64,9 +64,9 @@ for idx = 1:length(targets)
         run(targets{idx});
         test_val = true;
     catch exception
-        setenv("TEST_MESSAGE", exception.message)
+        setenv("TEST_MESSAGE", getReport(exception, 'extended', 'hyperlinks', 'off'))
         disp(['test ', targets{idx}, ' failed!'])
-        disp(exception.message);
+        disp(getReport(exception, 'extended', 'hyperlinks', 'off'));
         clear exception
         test_val = false;
     end

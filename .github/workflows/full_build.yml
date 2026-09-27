@@ -547,6 +547,9 @@ jobs:
       shell: bash
       run: |
         source ${{ github.workspace }}/acadosenv/bin/activate
+        # The Octave MEX installed below is CasADi 3.7.2; keep the Python
+        # serializer on the same version so generated OCP files are compatible.
+        pip install 'casadi==3.7.2'
         cd ${{ github.workspace }}/examples/acados_python/p_global_example
         python example_p_global.py
         echo "\nPython run done; testing OCP tranfer to Octave\n"
