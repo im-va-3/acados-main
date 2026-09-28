@@ -65,3 +65,22 @@ Contributions to this list are very welcome and allow to increase visibility of 
 - Energy Systems: Optimization-based control for microgrids and wind turbines.
 - Biomechanics: Optimal control in biomechanics through libraries like bioptim.
 - Aerospace: Applications in trajectory optimization and control for drones and morphing-wing aircraft.
+
+
+## Step-by-step user guide
+
+1. **Choose an interface.** Use the Python template to generate a solver from Python, or choose MATLAB/Simulink or Octave for an existing control workflow. All interfaces use the same acados solver core.
+2. **Prepare the platform.** Install the compiler, CMake, BLAS/LAPACK, and CasADi prerequisites listed for your operating system in the [installation guide](https://docs.acados.org/installation/index.html). Build the C library and configure the chosen language interface as described there.
+3. **Start from a runnable OCP.** After configuring the Python interface and acados library, run <code>python examples/acados_python/getting_started/minimal_example_ocp.py</code> from the repository root. Browse the local [examples](examples/) for the MATLAB, Simulink, Octave, simulation, and advanced OCP variants.
+4. **Describe the problem.** Define the state, control, parameters, dynamics, horizon, objective, and path/terminal constraints. Use CasADi expressions for symbolic terms, then configure the integrator and NLP/QP solver.
+5. **Solve and use the result.** Generate and compile the solver, pass the current state and parameters, solve, and read the optimal state/control trajectories. In receding-horizon control, apply the first control, update measurements and parameters, and solve again.
+6. **Move beyond the first OCP.** Use multiple phases for mode changes, MHE for online state/parameter estimation, and sensitivity outputs when differentiating through the optimization in learning or design loops.
+
+### Functionality map
+
+- **Control and estimation:** nonlinear/economic MPC, MHE, path and terminal constraints, soft constraints, and multi-phase OCPs — see [interfaces](docs/interfaces/) and [examples](examples/).
+- **Time discretization:** multiple shooting, ODE/DAE integrators, sensitivity propagation, and structure-exploiting Runge–Kutta methods.
+- **Optimization:** SQP/real-time iteration, QP solvers, condensing, regularization, and globalization choices. The user documentation explains which solver libraries must be enabled.
+- **Deployment and language support:** generated C solvers and Python, MATLAB, Simulink, and Octave interfaces. Consult interface-specific examples before deploying to an embedded target.
+- For the complete option/API reference and troubleshooting, start at [docs.acados.org](https://docs.acados.org/), especially [interfaces](https://docs.acados.org/interfaces/index.html) and [troubleshooting](https://docs.acados.org/troubleshooting/index.html).
+
